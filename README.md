@@ -10,4 +10,7 @@ node install express
 
 node server.js
 
+# CHange in backend start scripts
 npm i nodemon
+
+npm i cors

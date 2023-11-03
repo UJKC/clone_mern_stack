@@ -11,13 +11,13 @@ app.get("/", (req, res) => {
     res.send('Listening from home');
 });
 
-app.get("*", (req, res) => {
-    res.status(404).send("Page not found");
-});
-
 // Url config which listens the page subdomain
 app.get("/books", (req, res) => {
     res.send('Listening from books');
+});
+
+app.get("*", (req, res) => {
+    res.status(404).send("Page not found");
 });
 
 // making sure server is listening (Simply port config)
