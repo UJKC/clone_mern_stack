@@ -79,11 +79,74 @@ app.get("/", (req, res) => {
 });
 */
 
-app.use(cors())
+const { readdirSync } = require('fs');
 
+/*
+The `fs` module in Node.js stands for "File System," and it provides a set of functions for working with the file system on your computer or server. It allows you to perform various operations related to reading, writing, updating, and managing files and directories.
+
+The `fs` module provides both synchronous (blocking) and asynchronous (non-blocking) methods for file I/O, making it versatile for different use cases. Here are some common operations you can perform using the `fs` module:
+
+1. **Reading Files**:
+   - `fs.readFile`: Reads the contents of a file asynchronously.
+   - `fs.readFileSync`: Reads the contents of a file synchronously.
+
+2. **Writing Files**:
+   - `fs.writeFile`: Writes data to a file asynchronously.
+   - `fs.writeFileSync`: Writes data to a file synchronously.
+
+3. **Working with Directories**:
+   - `fs.readdir`: Reads the contents of a directory asynchronously.
+   - `fs.readdirSync`: Reads the contents of a directory synchronously.
+   - `fs.mkdir`: Creates a directory asynchronously.
+   - `fs.mkdirSync`: Creates a directory synchronously.
+
+4. **File and Directory Information**:
+   - `fs.stat`: Retrieves information about a file or directory asynchronously.
+   - `fs.statSync`: Retrieves information about a file or directory synchronously.
+
+5. **Renaming and Deleting**:
+   - `fs.rename`: Renames a file or directory asynchronously.
+   - `fs.renameSync`: Renames a file or directory synchronously.
+   - `fs.unlink`: Deletes a file asynchronously.
+   - `fs.unlinkSync`: Deletes a file synchronously.
+
+6. **Working with Streams**:
+   - `fs.createReadStream`: Creates a readable stream from a file.
+   - `fs.createWriteStream`: Creates a writable stream to a file.
+
+The `fs` module is a core module in Node.js, so you don't need to install it separately; it's available by default when you use Node.js. It's particularly useful for building applications that involve file manipulation, file reading and writing, and file system operations, such as web servers, utilities, and data processing scripts.
+*/
+
+// Cores configuration
+app.use(cors());
+
+/*
+// Get routes from user.js in backend
 const userrouter = require('./routes/user');
 
-app.use('/', userrouter);
+// Prefix to use
+app.use('/api', userrouter);
+
+console.log(readdirSync('./routes'));
+
+The code you provided is a combination of functions in JavaScript, and it appears to be used to dynamically load and attach route handlers to an Express.js application. Let's break down the code step by step:
+
+1. `readdirSync('./routes')`: This line reads the contents of the `'./routes'` directory synchronously using the `readdirSync` method from the `fs` module. It returns an array of file and directory names in that directory. In this context, it's expected that the `'./routes'` directory contains files that define route handlers.
+
+2. `.map((r) => app.use('/', require('./routes/user' + r))`: This is a chain of methods applied to the array of file and directory names obtained from `readdirSync`.
+
+   - `.map((r) => ... )`: This part of the code uses the `map` function, which iterates over each element (in this case, the file names) in the array and applies a given function to each element. The function provided takes the current element, denoted as `r`, and processes it.
+
+   - `app.use('/', require('./routes/user' + r))`: Within the `map` function, this code is executed for each `r`, which represents a file name from the `'./routes'` directory.
+
+     - `require('./routes/user' + r)`: This `require` statement is dynamically loading a module based on the value of `r`. It assumes that the files in the `'./routes'` directory follow a naming pattern where `'user'` is the prefix, and `r` is the variable part of the file name. For example, if `r` is `'profile.js'`, this will attempt to require `'./routes/userprofile.js'`.
+
+     - `app.use('/', ... )`: This line attaches the middleware or route handlers from the dynamically loaded module to the Express.js `app` object. The `'/'` route is used as the base route for these handlers.
+
+Overall, this code reads all the files in the `'./routes'` directory and attempts to dynamically load each of them as route handler modules. These modules are assumed to export route handling functions that are attached to the Express.js application at the `'/'` route. This approach allows you to modularize your route handlers and add them to your Express application without explicitly specifying each one individually in your code.
+*/
+
+readdirSync('./routes').map((r) => app.use('/', require('./routes/' + r)));
 
 // making sure server is listening (Simply port config) and this is the origin of requests from frontend
 app.listen(8000, () => {
