@@ -1,7 +1,9 @@
 // import express
 const express = require('express');
-const cors = require('cors')
-
+const cors = require('cors');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
 // making object of express
 const app = express();
 
@@ -80,6 +82,7 @@ app.get("/", (req, res) => {
 */
 
 const { readdirSync } = require('fs');
+const { error } = require('console');
 
 /*
 The `fs` module in Node.js stands for "File System," and it provides a set of functions for working with the file system on your computer or server. It allows you to perform various operations related to reading, writing, updating, and managing files and directories.
@@ -145,10 +148,28 @@ The code you provided is a combination of functions in JavaScript, and it appear
 
 Overall, this code reads all the files in the `'./routes'` directory and attempts to dynamically load each of them as route handler modules. These modules are assumed to export route handling functions that are attached to the Express.js application at the `'/'` route. This approach allows you to modularize your route handlers and add them to your Express application without explicitly specifying each one individually in your code.
 */
-
 readdirSync('./routes').map((r) => app.use('/', require('./routes/' + r)));
 
+// Env config if the file does not exist it takes 8000
+const PORT = process.env.PORT || 8000;
+
+// Mongoose connect
+mongoose.connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true, // Enable the URL parser
+    useUnifiedTopology: true, // Enable the new Server Discover and Monitoring engine
+  })
+  .then(() => console.log('Database connection successful'))
+  .catch(() => console.log('Database connection failed'));
+
 // making sure server is listening (Simply port config) and this is the origin of requests from frontend
-app.listen(8000, () => {
-    console.log('server is listening');
+app.listen(PORT, () => {
+    console.log('server is listening on port ' + PORT);
 });
+
+/*
+xajil78992@jucatyo.com
+Kncgreat1!
+
+Ukc
+Kncgreat1
+*/
