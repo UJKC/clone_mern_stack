@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 // making object of express
 const app = express();
+app.use(express.json())
 
 /*
 // Allowed url array (only header is checked here if the orgin is www.example.com it will not respond)
