@@ -5,6 +5,7 @@ const cors = require('cors')
 // making object of express
 const app = express();
 
+/*
 // Allowed url array (only header is checked here if the orgin is www.example.com it will not respond)
 let allowed = [ 'http://localhost:3000', 'and other links' ];
 
@@ -28,7 +29,6 @@ function options (req, res) {
     res(null, tmp);
 }
 
-/*
 The code you provided is for handling Cross-Origin Resource Sharing (CORS) in an Express.js application. It defines a custom `options` function that checks the `Origin` header of incoming HTTP requests against an array of allowed origins (`allowed`). The purpose of this code is to control which origins are allowed to make requests to your server.
 
 Let's break down the code with an example URL request to illustrate how it works:
@@ -68,9 +68,6 @@ Now, let's consider a scenario where a client makes an HTTP request to your serv
 
 This code allows you to control which origins are permitted to access your server's resources. Requests from allowed origins are processed, while requests from disallowed origins are blocked based on the configuration in the `options` function.
 
-*/
-
-/*
 // use cors
 app.use(cors(options));
 
@@ -84,14 +81,9 @@ app.get("/", (req, res) => {
 
 app.use(cors())
 
-// Url config which listens the page subdomain
-app.get("/books", (req, res) => {
-    res.send('Listening from books');
-});
+const userrouter = require('./routes/user');
 
-app.get("*", (req, res) => {
-    res.status(404).send("Page not found");
-});
+app.use('/', userrouter);
 
 // making sure server is listening (Simply port config) and this is the origin of requests from frontend
 app.listen(8000, () => {
