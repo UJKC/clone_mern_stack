@@ -3,16 +3,15 @@ const express = require('express');
 const router = express.Router();
 
 //buggy
-const { home } = require('../controller/user')
+const { register } = require('../controller/user')
 
-/*
+
 // Url config which listens the page subdomain
 router.get('/user', (req, res) => {
     res.status(200).json({
         message: "Listening from user website"
     });
 });
-*/
 
 router.get("/books", (req, res) => {
     res.status(200).json({
@@ -30,7 +29,7 @@ router.get("*", (req, res) => {
     res.status(404).send("Page not found");
 });
 
-router.get("/user", home);
+router.post("/register", register);
 
 // Export the routes
 module.exports = router;
