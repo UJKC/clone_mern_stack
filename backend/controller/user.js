@@ -25,6 +25,7 @@ exports.register = async(req, res) => {
             });
         }
         validate length of firstname, lastname, password
+        validate username
         section 3 22
         */
 
@@ -35,14 +36,24 @@ exports.register = async(req, res) => {
             });
         }
 
+        const checku = await User.findOne({ username });
+        if (checku) {
+            return res.status(400).json({
+                message: 'username error, try something else',
+            });
+        }
+
+        /*
+        // Cryptic password
         const cryptic = await bcrypt.hash(password, 12);
         console.log(cryptic);
+        */
 
         const user = await new User({
             firstName,
             lastName,
             username,
-            password,
+            password, //cryptic,
             email,
             gender,
             bday,
