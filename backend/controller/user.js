@@ -1,5 +1,6 @@
-const home = (req, res) => {
-    res.send('I cannot take more');
+exports.home = (req, res) => {
+    res.status(403).json({
+        message: 'I cannot take more',
+        error: 'Error happened'
+    });
 };
-
-module.exports = home;
