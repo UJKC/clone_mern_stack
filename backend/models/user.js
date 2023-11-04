@@ -1,7 +1,7 @@
 const mongoos = require('mongoose');
 
 
-// Thsi is required for accessing the database
+// This is required for accessing the database as template i guess
 const userSchema = mongoos.Schema({
     firstName: {
         type: String,

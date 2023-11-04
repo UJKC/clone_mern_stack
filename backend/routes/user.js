@@ -6,8 +6,8 @@ const router = express.Router();
 const { home } = require('../controller/user')
 
 // Url config which listens the page subdomain
-router.status(200).get('/user', (req, res) => {
-    res.json({
+router.get('/user', (req, res) => {
+    res.status(200).json({
         message: "Listening from user website"
     });
 });
