@@ -1,6 +1,7 @@
 const User = require('../models/user');
 
 const validate = require('../helpers/validation');
+const validate_tken = require('../helpers/token');
 
 const bcrypt = require('bcrypt')
 
@@ -60,6 +61,9 @@ exports.register = async(req, res) => {
             bmonth,
             byear,
         }).save()
+
+        const emailVarification = validate_tken.generateTokens({id: user._id.toString()}, '30m');
+        console.log(emailVarification);
         res.json(user);
     }
     catch (err) {
