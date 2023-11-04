@@ -22,7 +22,16 @@ exports.register = async(req, res) => {
                 message: 'email error',
             });
         }
+        validate length of firstname, lastname, password
+        section 3 22
         */
+
+        const check = await User.findOne({ email });
+        if (check) {
+            return res.status(400).json({
+                message: 'email error, try something else',
+            });
+        }
 
         const user = await new User({
             firstName,
