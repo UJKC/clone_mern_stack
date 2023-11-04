@@ -14,3 +14,5 @@ node server.js
 npm i nodemon
 
 npm i cors
+
+npm i bcrypt

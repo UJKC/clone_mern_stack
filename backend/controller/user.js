@@ -2,6 +2,8 @@ const User = require('../models/user');
 
 const validate = require('../helpers/validation');
 
+const bcrypt = require('bcrypt')
+
 exports.register = async(req, res) => {
     try{
         const {
@@ -32,6 +34,9 @@ exports.register = async(req, res) => {
                 message: 'email error, try something else',
             });
         }
+
+        const cryptic = await bcrypt.hash(password, 12);
+        console.log(cryptic);
 
         const user = await new User({
             firstName,
