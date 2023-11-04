@@ -16,3 +16,5 @@ npm i nodemon
 npm i cors
 
 npm i bcrypt
+
+npm i jsonwebtoken
