@@ -7,6 +7,10 @@ npm start
 
 npm i react-router-dom
 
+npm i redux
+
+npm i react-redux
+
 # Backend
 node install express
 
