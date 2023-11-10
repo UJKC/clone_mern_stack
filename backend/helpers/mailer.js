@@ -9,7 +9,7 @@ const oauth_link = 'https://developers.google.com/oauthplayground'
 const { EMAIL, MAILING_ID, MAILING_REFRESH, MAILING_SECRET} = process.env
 
 const auth = new OAuth2(
-    MAILING_ID, MAILING_REFRESH, MAILING_SECRET, oauth_link
+    MAILING_ID, MAILING_SECRET, MAILING_REFRESH, oauth_link
 );
 
 exports.sendVarificationEmail = (email, name, url) => {
@@ -32,7 +32,7 @@ exports.sendVarificationEmail = (email, name, url) => {
         from: EMAIL,
         to: email,
         subject: "Facebook email varification",
-        html: ``,
+        html: `<div> <span> Actions require: Activate your facebook account </span> </div> <div> <span> Hello ${name} </span> <div> <span> You recently created account on UjwalHub. Please confirm your registration. </span> </div> <a href=${url}> Confirm your registration </a> <div> <span> You give up everything </span> </div> </div>`,
     };
     stmp.sendMail(mailOptions, (err, res) => {
         if (err) {

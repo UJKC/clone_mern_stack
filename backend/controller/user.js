@@ -3,7 +3,8 @@ const User = require('../models/user');
 const validate = require('../helpers/validation');
 const validate_tken = require('../helpers/token');
 
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { sendVarificationEmail } = require('../helpers/mailer');
 
 exports.register = async(req, res) => {
     try{
@@ -63,9 +64,14 @@ exports.register = async(req, res) => {
             byear,
         }).save()
 
-        const emailVarification = validate_tken.generateTokens({id: user._id.toString()}, '30m');
+        const emailVarification = validate_tken.generateTokens({
+            id: user._id.toString()
+        }, '30m'
+        );
         console.log(emailVarification);
         res.json(user);
+        const url = `${process.env.BASE_URL}/activate/${emailVarification}`;
+        sendVarificationEmail(user.email, user.firstName, url);
     }
     catch (err) {
         res.status(500).json({
@@ -109,4 +115,7 @@ So, the schema definition and model creation specify how your data should be str
 
 665669220792-nip66kbcjlfc4ol77c32q31fuq2neen8.apps.googleusercontent.com
 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
+
+
+auth: 4/0AfJohXnGu5wvNGEVHy3VytvRny7mI80OBn_f2-cVKjoNeCoujYzgGfYT614Tk_I32PD7Ww
 */
