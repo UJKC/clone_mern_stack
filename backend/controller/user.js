@@ -19,13 +19,14 @@ exports.register = async(req, res) => {
             byear,
         } = req.body;
 
-        /*
-        if (!validate(email)) {
+        if (!validate.validate(email)) {
             return res.status(400).json({
                 message: 'email error',
             });
         }
-        validate length of firstname, lastname, password
+
+        /*
+        validate length of password
         validate username
         section 3 22
         */
@@ -41,6 +42,12 @@ exports.register = async(req, res) => {
         if (checku) {
             return res.status(400).json({
                 message: 'username error, try something else',
+            });
+        }
+
+        if (!validate.validateLength(password, 6, 12)) {
+            return res.status(400).json({
+                message: 'password error',
             });
         }
 
