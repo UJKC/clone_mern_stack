@@ -11,6 +11,8 @@ npm i redux
 
 npm i react-redux
 
+npm i redux-devtools-extension
+
 # Backend
 node install express
 
