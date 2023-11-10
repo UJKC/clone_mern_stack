@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 //buggy
-const { register } = require('../controller/user')
+const { register, activateAccount } = require('../controller/user')
 
 
 // Url config which listens the page subdomain
@@ -30,6 +30,8 @@ router.get("*", (req, res) => {
 });
 
 router.post("/register", register);
+
+router.post('/activate', activateAccount);
 
 // Export the routes
 module.exports = router;

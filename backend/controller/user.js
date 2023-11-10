@@ -4,7 +4,10 @@ const validate = require('../helpers/validation');
 const validate_tken = require('../helpers/token');
 
 const bcrypt = require('bcrypt');
+
 const { sendVarificationEmail } = require('../helpers/mailer');
+
+const jwt = require('jsonwebtoken');
 
 exports.register = async(req, res) => {
     try{
@@ -132,3 +135,29 @@ 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
 
 auth: 4/0AfJohXnGu5wvNGEVHy3VytvRny7mI80OBn_f2-cVKjoNeCoujYzgGfYT614Tk_I32PD7Ww
 */
+
+exports.activateAccount = async(req, res) => {
+    try {
+        const { token } = req.body;
+        const user = jwt.verify(token, process.env.TOKEN_SECRET);
+        const check = await User.findById(user.id);
+        if (check.varified == true) {
+            return res.status(400).json({
+                message: "This email is varified"
+            });
+        }
+        else {
+            await User.findByIdAndUpdate(user.id, {
+                varified: true
+            });
+            return res.status(200).json({
+                message: "Email and account activated"
+            });
+        }
+    }
+    catch (err) {
+        res.status(500).json({
+            message: err.message,
+        });
+    }
+};
