@@ -69,9 +69,22 @@ exports.register = async(req, res) => {
         }, '30m'
         );
         console.log(emailVarification);
-        res.json(user);
         const url = `${process.env.BASE_URL}/activate/${emailVarification}`;
         sendVarificationEmail(user.email, user.firstName, url);
+        const token = validate_tken.generateTokens({
+            id: user._id.toString()
+        }, "7d"
+        );
+        res.send({
+            id: user._id,
+            username: user.username,
+            picture: user.picture,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            token: token,
+            varification: user.varified,
+            message: 'Register Success | Please activate your email to start'
+        });
     }
     catch (err) {
         res.status(500).json({
