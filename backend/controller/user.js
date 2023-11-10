@@ -49,17 +49,14 @@ exports.register = async(req, res) => {
             });
         }
 
-        /*
-        // Cryptic password
         const cryptic = await bcrypt.hash(password, 12);
         console.log(cryptic);
-        */
 
         const user = await new User({
             firstName,
             lastName,
             username,
-            password, //cryptic,
+            password: cryptic,
             email,
             gender,
             bday,
@@ -161,3 +158,42 @@ exports.activateAccount = async(req, res) => {
         });
     }
 };
+
+exports.login = async (req, res) => {
+    try {
+       const { email, password } = req.body;
+       const user = await User.findOne({
+        email
+       });
+       if (!user) {
+        return res.status(400).json({
+            message: "The email address is wrong"
+        });
+       }
+       const check = await bcrypt.compare(password, user.password);
+       if (!check) {
+        return res.status(400).json({
+            message: "Invalid password"
+        });
+       }
+       const token = validate_tken.generateTokens({
+        id: user._id.toString()
+        }, "7d"
+        );
+        res.send({
+            id: user._id,
+            username: user.username,
+            picture: user.picture,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            token: token,
+            varification: user.varified,
+            message: 'Register Success | Please activate your email to start'
+        });
+    }
+    catch {
+        res.status(500).json({
+            message: err.message,
+        });
+    }
+}
