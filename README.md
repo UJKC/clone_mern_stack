@@ -19,4 +19,6 @@ npm i bcrypt
 
 npm i jsonwebtoken
 
-nom i googleapis
+npm i googleapis
+
+npm i nodemailer
