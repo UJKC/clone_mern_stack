@@ -25,12 +25,6 @@ exports.register = async(req, res) => {
             });
         }
 
-        /*
-        validate length of password
-        validate username
-        section 3 22
-        */
-
         const check = await User.findOne({ email });
         if (check) {
             return res.status(400).json({
@@ -112,4 +106,7 @@ const user = await User.create({
 Here, the `User.create` method is used to create and save a new user document with the provided data.
 
 So, the schema definition and model creation specify how your data should be structured and managed in the database, while actual data insertion or modification is done through methods like `create`, `save`, or other Mongoose operations.
+
+665669220792-nip66kbcjlfc4ol77c32q31fuq2neen8.apps.googleusercontent.com
+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
 */
