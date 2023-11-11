@@ -13,6 +13,8 @@ npm i react-redux
 
 npm i redux-devtools-extension
 
+npm i formik
+
 # Backend
 node install express
 
