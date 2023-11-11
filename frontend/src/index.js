@@ -4,12 +4,8 @@ import "./index.css";
 import "./styles/icons/icons.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { createStore } from "redux"
 import { Provider } from 'react-redux'
-import { composeWithDevTools } from "redux-devtools-extension"
-import rootReducer from "./reducers/index";
-
-const store = createStore(rootReducer, composeWithDevTools())
+import store from "./store";
 
 /*
 @deprecated
@@ -28,6 +24,15 @@ You should not be using the redux core package by itself today, except for learn
 If you want to use createStore without this visual deprecation warning, use the legacy_createStore import instead:
 
 import { legacy_createStore as createStore} from 'redux'
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById("root")
+);
 */
 
 ReactDOM.render(
